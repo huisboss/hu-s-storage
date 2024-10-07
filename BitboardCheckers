@@ -5,7 +5,7 @@ public class BitboardCheckers {
 
     private static final long LEFT_EDGE = 0x8080808080808080L;
     private static final long RIGHT_EDGE = 0x0101010101010101L;
-    private static final long BLACK_TILES = 0x55AA55AA55AA55AAL; 
+    private static final long BLACK_TILES = 0x55AA55AA55AA55AAL;
 
     private static final int UP_LEFT = 9;
     private static final int UP_RIGHT = 7;
@@ -13,8 +13,16 @@ public class BitboardCheckers {
     private static final int DOWN_RIGHT = -9;
 
     public BitboardCheckers() {
-        player1Pieces = 0x00000FFF00000000L;
-        player2Pieces = 0xFFF0000000000000L;
+        // Player 1 starts on the first three rows of black squares
+        player1Pieces = 0x00000000000000FFL; // Positions: 1, 3, 5, 7, 9, 11, 13, 15
+        player1Pieces |= 0x000000000000FF00L; // Positions: 17, 19, 21, 23, 25, 27, 29, 31
+        player1Pieces |= 0x0000000000FF0000L; // Positions: 33, 35, 37, 39, 41, 43, 45, 47
+
+        // Player 2 starts on the last three rows of black squares
+        player2Pieces = 0xFF00000000000000L; // Positions: 48, 50, 52, 54, 56, 58, 60, 62
+        player2Pieces |= 0x00FF000000000000L; // Positions: 49, 51, 53, 55, 57, 59, 61, 63
+        player2Pieces |= 0x0000FF0000000000L; // Positions: 32, 34, 36, 38, 40, 42, 44, 46
+
         kings = 0L;
     }
 
@@ -69,6 +77,7 @@ public class BitboardCheckers {
             player2Pieces = BitManipulationUtility.setBit(player2Pieces, Long.numberOfTrailingZeros(move));
         }
 
+        // Promote to king if necessary
         if ((move & 0xFF00000000000000L) != 0 && playerPieces == player1Pieces) {
             promoteToKing(Long.numberOfTrailingZeros(move));
         }
@@ -93,8 +102,8 @@ public class BitboardCheckers {
         System.out.println("Initial Board State:");
         game.displayBoardState();
 
-        long piece = 1L << 17;
-        game.makeMove(game.player1Pieces, game.player2Pieces, piece, UP_LEFT);
+        long piece = 1L << 17; // Example piece from Player 1
+        game.makeMove(game.player1Pieces, game.player2Pieces, piece, UP_LEFT); // Move example
 
         System.out.println("\nBoard After Move:");
         game.displayBoardState();
