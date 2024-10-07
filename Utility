@@ -1,60 +1,58 @@
 public class BitManipulationUtility {
 
-    public static long setBit(long value, int position) {
-        return value | (1L << position);
+    // Set a specific bit
+    public static long setBit(long bitboard, int position) {
+        return bitboard | (1L << position);
     }
 
-    public static long clearBit(long value, int position) {
-        return value & ~(1L << position);
+    // Clear a specific bit
+    public static long clearBit(long bitboard, int position) {
+        return bitboard & ~(1L << position);
     }
 
-    public static long toggleBit(long value, int position) {
-        return value ^ (1L << position);
+    // Toggle a specific bit
+    public static long toggleBit(long bitboard, int position) {
+        return bitboard ^ (1L << position);
     }
 
-    public static int getBit(long value, int position) {
-        return (value & (1L << position)) != 0 ? 1 : 0;
+    // Get the value of a specific bit
+    public static boolean getBit(long bitboard, int position) {
+        return (bitboard & (1L << position)) != 0;
     }
 
-    public static long binaryAddition(long a, long b) {
+    // Convert a number to a binary string (64-bit padded for bitboard)
+    public static String toBinaryString(long value) {
+        return String.format("%64s", Long.toBinaryString(value)).replace(' ', '0');
+    }
+
+    // Convert a number to a hexadecimal string
+    public static String toHexString(long value) {
+        return String.format("0x%016X", value);
+    }
+
+    // Perform binary arithmetic: addition
+    public static long add(long a, long b) {
         return a + b;
     }
 
-    public static long binarySubtraction(long a, long b) {
+    // Perform binary arithmetic: subtraction
+    public static long subtract(long a, long b) {
         return a - b;
     }
 
-    public static long binaryMultiplication(long a, long b) {
+    // Perform binary arithmetic: multiplication
+    public static long multiply(long a, long b) {
         return a * b;
     }
 
-    public static long binaryDivision(long a, long b) {
-        if (b == 0) throw new ArithmeticException("Division by zero");
+    // Perform binary arithmetic: division
+    public static long divide(long a, long b) {
         return a / b;
     }
 
-    public static String toBinaryString(long value) {
-        return Long.toBinaryString(value);
-    }
-
-    public static String toHexString(long value) {
-        return Long.toHexString(value);
-    }
-
+    // Convert between decimal, binary, and hexadecimal formats
     public static String toDecimalString(long value) {
         return Long.toString(value);
     }
-
-    public static String toBinaryString(int value) {
-        return Integer.toBinaryString(value);
-    }
-
-    public static String toBinaryString(short value) {
-        return Integer.toBinaryString(value & 0xFFFF);
-    }
-
-    public static String toBinaryString(byte value) {
-        return Integer.toBinaryString(value & 0xFF);
-    }
-
 }
+
